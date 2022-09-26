@@ -9,26 +9,19 @@ struct game{
 	bool win;
 };
 
-void game_start(struct game game){};
-void game_init(){};
-
-void output_menu(){
-	char input;
-	printf ("Hello! \n Do you wanna play the game? (y/n)\t");
-	scanf("%c", &input);
-	switch (input){
-		case 'y': {
-			game new_game;
-			game_init();
-			game_start(new_game);
-		};
-	}
-}
+void game_start(struct game game);
+game game_init();
+void output_menu();
 
 int main()
 {
 	srand(time(NULL));
-	int left, right;
+	output_menu();
+	return 0;
+}
+
+void game_start(){
+
 	int a, b;
 	bool flag = false;
 	a = rand() % 10;
@@ -49,13 +42,42 @@ int main()
 	}
 	if (flag == true) printf ("Bingo! \nYou won! \n");
 	else printf("Sorry! \nYou lose!\n");
-	return 0;
 }
 
+void output_menu(){
+	char input;
+	bool isExit = false;
+	printf ("Hello! \n");
+	while (isExit == false){
+	printf ("Do you wanna play the game? (y/n)\t");
+	scanf("%c", &input);
+		switch (input){
+			case 'y': {
+				game_start(game_init());
+				break;
+			};
+			case 'n':{
+				printf ("\nGoodbye! \n");
+				isExit = true;
+				break;
+			};
+			default: {
+				printf ("\nI don't understand! Let's try again! \n");
+				break;
+			};
+		}
+	}
+}
 
+game game_init(){
+	game new_game;
+	new_game.range_left = 0;
+	new_game.range_right = 10;
+	new_game.tries = 5;
+	new_game.win = false;
 
-
-
+	return new_game;
+}
 
 
 
